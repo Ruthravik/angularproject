@@ -1,0 +1,157 @@
+<div class="login-container">
+  <!-- Background Animation -->
+  <div class="background-animation">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    <div class="floating-shape shape-4"></div>
+  </div>
+
+  <!-- Main Login Card -->
+  <div class="login-card slide-in-left">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo pulse">
+        <div class="logo-icon">🏢</div>
+        <div class="logo-text">
+          <h1>VendorPortal</h1>
+          <p>SAP Integration Platform</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Time Display -->
+    <div class="time-display fade-in">
+      <div class="time">{{ currentTime | date:'HH:mm:ss' }}</div>
+      <div class="date">{{ currentTime | date:'EEEE, MMMM d, y' }}</div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form-container">
+      <h2 class="form-title slide-in-right">Welcome Back</h2>
+      <p class="form-subtitle">Please sign in to your vendor account</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <!-- Vendor ID Field -->
+        <div class="form-group">
+          <label for="vendorId">Vendor ID</label>
+          <div class="input-wrapper">
+            <input
+              id="vendorId"
+              type="text"
+              formControlName="vendorId"
+              placeholder="Enter your vendor ID"
+              [class.error]="vendorId?.touched && vendorId?.errors"
+              autocomplete="username"
+            />
+            <span class="input-icon">👤</span>
+          </div>
+          <div class="error-message" *ngIf="vendorId?.touched && vendorId?.errors">
+            {{ getFieldError('vendorId') }}
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter your password"
+              [class.error]="password?.touched && password?.errors"
+              autocomplete="current-password"
+            />
+            <span class="input-icon toggle-password" (click)="togglePasswordVisibility()">
+              {{ showPassword ? '👁️' : '🔒' }}
+            </span>
+          </div>
+          <div class="error-message" *ngIf="password?.touched && password?.errors">
+            {{ getFieldError('password') }}
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message global-error" *ngIf="errorMessage">
+          <span class="error-icon">⚠️</span>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Login Button -->
+        <button 
+          type="submit" 
+          class="login-btn"
+          [disabled]="isLoading"
+          [class.loading]="isLoading"
+        >
+          <span *ngIf="!isLoading" class="btn-text">Sign In</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <div class="spinner"></div>
+            <span>Authenticating...</span>
+          </span>
+        </button>
+      </form>
+
+      <!-- Demo Credentials -->
+      <div class="demo-section">
+        <h3>Demo Credentials</h3>
+        <div class="demo-cards">
+          <div class="demo-card" (click)="useDemoCredentials('V001')">
+            <div class="demo-icon">🏭</div>
+            <div class="demo-info">
+              <div class="demo-title">Tech Solutions Ltd.</div>
+              <div class="demo-id">V001</div>
+            </div>
+          </div>
+          <div class="demo-card" (click)="useDemoCredentials('V002')">
+            <div class="demo-icon">🌐</div>
+            <div class="demo-info">
+              <div class="demo-title">Global Suppliers Inc.</div>
+              <div class="demo-id">V002</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="info-panel slide-in-right">
+    <div class="info-content">
+      <h2>Enterprise Vendor Portal</h2>
+      <p>Seamlessly integrate with SAP ERP system for complete business transaction management.</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📋</div>
+          <div class="feature-text">
+            <h4>Request for Quotation</h4>
+            <p>Manage and respond to RFQs efficiently</p>
+          </div>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">📦</div>
+          <div class="feature-text">
+            <h4>Purchase Orders</h4>
+            <p>Track and process purchase orders in real-time</p>
+          </div>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">✅</div>
+          <div class="feature-text">
+            <h4>Goods Receipt</h4>
+            <p>Monitor goods receipt and delivery status</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="powered-by">
+        <span>Powered by SAP Integration</span>
+        <div class="sap-badge">SAP</div>
+      </div>
+    </div>
+  </div>
+</div>
