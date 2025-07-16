@@ -1,0 +1,281 @@
+<div class="profile-container" *ngIf="!isLoading">
+  <!-- Header -->
+  <header class="profile-header slide-in-left">
+    <div class="header-content">
+      <div class="profile-info">
+        <div class="profile-avatar">
+          <div class="avatar-icon">🏢</div>
+        </div>
+        <div class="profile-details">
+          <h1>{{ currentVendor?.companyName }}</h1>
+          <p class="vendor-id">Vendor ID: {{ currentVendor?.vendorId }}</p>
+          <span [class]="getStatusBadgeClass(currentVendor?.status || '')">
+            {{ currentVendor?.status | titlecase }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button 
+          class="btn btn-primary" 
+          (click)="toggleEdit()" 
+          *ngIf="!isEditing">
+          <span class="icon">✏️</span>
+          <span>Edit Profile</span>
+        </button>
+        
+        <div class="edit-actions" *ngIf="isEditing">
+          <button class="btn btn-primary" (click)="saveProfile()">
+            <span class="icon">💾</span>
+            <span>Save</span>
+          </button>
+          <button class="btn btn-secondary" (click)="cancelEdit()">
+            <span class="icon">❌</span>
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Profile Content -->
+  <main class="profile-main">
+    <div class="profile-grid">
+      <!-- Company Information -->
+      <section class="profile-card company-info slide-in-right">
+        <div class="card-header">
+          <h2>🏢 Company Information</h2>
+        </div>
+        
+        <div class="card-content">
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Company Name</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.companyName"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.companyName }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Vendor ID</label>
+              <div class="info-value readonly">{{ currentVendor?.vendorId }}</div>
+            </div>
+
+            <div class="info-item">
+              <label>Contact Person</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.contactPerson"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.contactPerson }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Email Address</label>
+              <input 
+                *ngIf="isEditing" 
+                type="email" 
+                [(ngModel)]="currentVendor!.email"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.email }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Phone Number</label>
+              <input 
+                *ngIf="isEditing" 
+                type="tel" 
+                [(ngModel)]="currentVendor!.phone"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.phone }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Status</label>
+              <select 
+                *ngIf="isEditing" 
+                [(ngModel)]="currentVendor!.status"
+                class="form-input">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="pending">Pending</option>
+              </select>
+              <div *ngIf="!isEditing" class="info-value">
+                <span [class]="getStatusBadgeClass(currentVendor?.status || '')">
+                  {{ currentVendor?.status | titlecase }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Address Information -->
+      <section class="profile-card address-info fade-in">
+        <div class="card-header">
+          <h2>📍 Address Information</h2>
+        </div>
+        
+        <div class="card-content">
+          <div class="info-grid">
+            <div class="info-item full-width">
+              <label>Street Address</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.address.street"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.address.street }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>City</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.address.city"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.address.city }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>State/Province</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.address.state"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.address.state }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Country</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.address.country"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.address.country }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Postal Code</label>
+              <input 
+                *ngIf="isEditing" 
+                type="text" 
+                [(ngModel)]="currentVendor!.address.postalCode"
+                class="form-input">
+              <div *ngIf="!isEditing" class="info-value">
+                {{ currentVendor?.address.postalCode }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Information -->
+      <section class="profile-card account-info bounce">
+        <div class="card-header">
+          <h2>📊 Account Information</h2>
+        </div>
+        
+        <div class="card-content">
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Registration Date</label>
+              <div class="info-value">
+                {{ formatDate(currentVendor?.registrationDate || new Date()) }}
+              </div>
+            </div>
+
+            <div class="info-item">
+              <label>Last Login</label>
+              <div class="info-value">
+                {{ currentVendor?.lastLogin ? formatDate(currentVendor.lastLogin) : 'Never' }}
+              </div>
+            </div>
+
+            <div class="info-item full-width">
+              <label>Account Notes</label>
+              <div class="info-value">
+                Active vendor account with full access to all portal features.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAP Integration Status -->
+      <section class="profile-card sap-status slide-in-left">
+        <div class="card-header">
+          <h2>🔗 SAP Integration Status</h2>
+        </div>
+        
+        <div class="card-content">
+          <div class="status-grid">
+            <div class="status-item">
+              <div class="status-icon connected">✅</div>
+              <div class="status-content">
+                <div class="status-title">SAP ERP Connection</div>
+                <div class="status-subtitle">Connected and Active</div>
+              </div>
+            </div>
+
+            <div class="status-item">
+              <div class="status-icon connected">🔄</div>
+              <div class="status-content">
+                <div class="status-title">Data Synchronization</div>
+                <div class="status-subtitle">Real-time sync enabled</div>
+              </div>
+            </div>
+
+            <div class="status-item">
+              <div class="status-icon connected">🔐</div>
+              <div class="status-content">
+                <div class="status-title">Security Status</div>
+                <div class="status-subtitle">All security checks passed</div>
+              </div>
+            </div>
+
+            <div class="status-item">
+              <div class="status-icon connected">📡</div>
+              <div class="status-content">
+                <div class="status-title">API Access</div>
+                <div class="status-subtitle">Full API access granted</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="loading-content">
+    <div class="loading-spinner spin"></div>
+    <div class="loading-text">Loading vendor profile...</div>
+    <div class="loading-subtitle">Fetching data from SAP system</div>
+  </div>
+</div>

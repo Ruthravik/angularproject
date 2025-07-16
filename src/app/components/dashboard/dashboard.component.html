@@ -1,0 +1,227 @@
+<div class="dashboard-container" *ngIf="!isLoading">
+  <!-- Header Section -->
+  <header class="dashboard-header slide-in-left">
+    <div class="header-content">
+      <div class="welcome-section">
+        <h1 class="greeting">{{ greeting }}!</h1>
+        <h2 class="vendor-name">{{ currentVendor?.companyName }}</h2>
+        <p class="vendor-id">Vendor ID: {{ currentVendor?.vendorId }}</p>
+      </div>
+      
+      <div class="header-actions">
+        <div class="time-display">
+          <div class="time">{{ currentTime | date:'HH:mm:ss' }}</div>
+          <div class="date">{{ currentTime | date:'MMM d, y' }}</div>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="btn btn-secondary" (click)="refreshData()" title="Refresh Data">
+            <span class="icon">🔄</span>
+            <span>Refresh</span>
+          </button>
+          <button class="btn btn-secondary" (click)="logout()" title="Logout">
+            <span class="icon">🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Statistics Cards -->
+  <section class="stats-section slide-in-right">
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="stat-icon quotation">📋</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ dashboardData?.statistics.totalQuotations }}</div>
+          <div class="stat-label">Total Quotations</div>
+          <div class="stat-sublabel">{{ dashboardData?.statistics.pendingQuotations }} pending</div>
+        </div>
+      </div>
+
+      <div class="stat-card fade-in">
+        <div class="stat-icon purchase-order">📦</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ dashboardData?.statistics.totalPurchaseOrders }}</div>
+          <div class="stat-label">Purchase Orders</div>
+          <div class="stat-sublabel">{{ dashboardData?.statistics.activePurchaseOrders }} active</div>
+        </div>
+      </div>
+
+      <div class="stat-card fade-in">
+        <div class="stat-icon goods-receipt">✅</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ dashboardData?.statistics.totalGoodsReceipts }}</div>
+          <div class="stat-label">Goods Receipts</div>
+          <div class="stat-sublabel">{{ dashboardData?.statistics.pendingGoodsReceipts }} pending</div>
+        </div>
+      </div>
+
+      <div class="stat-card fade-in revenue">
+        <div class="stat-icon">💰</div>
+        <div class="stat-content">
+          <div class="stat-value">{{ formatCurrency(dashboardData?.statistics.totalRevenue || 0) }}</div>
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-sublabel">This year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="content-grid">
+      <!-- Recent Quotations -->
+      <section class="content-card quotations-card slide-in-left">
+        <div class="card-header">
+          <h3>📋 Recent Quotations</h3>
+          <div class="card-actions">
+            <button class="btn-icon" title="View All">
+              <span>📄</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="quotation-item" 
+               *ngFor="let quotation of dashboardData?.quotations"
+               (click)="viewQuotationDetails(quotation)">
+            <div class="item-header">
+              <div class="item-id">{{ quotation.id }}</div>
+              <div class="item-amount">{{ formatCurrency(quotation.amount, quotation.currency) }}</div>
+            </div>
+            <div class="item-content">
+              <div class="item-description">{{ quotation.description }}</div>
+              <div class="item-meta">
+                <span class="item-date">Due: {{ formatDate(quotation.dueDate) }}</span>
+                <span [class]="getStatusBadgeClass(quotation.status)">{{ quotation.status | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="empty-state" *ngIf="!dashboardData?.quotations?.length">
+            <div class="empty-icon">📋</div>
+            <div class="empty-text">No recent quotations</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Purchase Orders -->
+      <section class="content-card purchase-orders-card slide-in-right">
+        <div class="card-header">
+          <h3>📦 Recent Purchase Orders</h3>
+          <div class="card-actions">
+            <button class="btn-icon" title="View All">
+              <span>📄</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="purchase-order-item" 
+               *ngFor="let po of dashboardData?.purchaseOrders"
+               (click)="viewPurchaseOrderDetails(po)">
+            <div class="item-header">
+              <div class="item-id">{{ po.id }}</div>
+              <div class="item-amount">{{ formatCurrency(po.amount, po.currency) }}</div>
+            </div>
+            <div class="item-content">
+              <div class="item-description">{{ po.items }} items</div>
+              <div class="item-meta">
+                <span class="item-date">Delivery: {{ formatDate(po.deliveryDate) }}</span>
+                <span [class]="getStatusBadgeClass(po.status)">{{ po.status | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="empty-state" *ngIf="!dashboardData?.purchaseOrders?.length">
+            <div class="empty-icon">📦</div>
+            <div class="empty-text">No recent purchase orders</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Goods Receipts -->
+      <section class="content-card goods-receipts-card fade-in">
+        <div class="card-header">
+          <h3>✅ Recent Goods Receipts</h3>
+          <div class="card-actions">
+            <button class="btn-icon" title="View All">
+              <span>📄</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="goods-receipt-item" 
+               *ngFor="let gr of dashboardData?.goodsReceipts"
+               (click)="viewGoodsReceiptDetails(gr)">
+            <div class="item-header">
+              <div class="item-id">{{ gr.id }}</div>
+              <div class="item-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" 
+                       [style.width.%]="(gr.receivedItems / gr.totalItems) * 100"></div>
+                </div>
+                <span class="progress-text">{{ gr.receivedItems }}/{{ gr.totalItems }}</span>
+              </div>
+            </div>
+            <div class="item-content">
+              <div class="item-description">PO: {{ gr.poNumber }}</div>
+              <div class="item-meta">
+                <span class="item-date">{{ formatDate(gr.receiptDate) }}</span>
+                <span [class]="getStatusBadgeClass(gr.status)">{{ gr.status | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="empty-state" *ngIf="!dashboardData?.goodsReceipts?.length">
+            <div class="empty-icon">✅</div>
+            <div class="empty-text">No recent goods receipts</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="content-card quick-actions-card bounce">
+        <div class="card-header">
+          <h3>⚡ Quick Actions</h3>
+        </div>
+        
+        <div class="card-content">
+          <div class="quick-actions-grid">
+            <button class="quick-action-btn">
+              <div class="action-icon">📋</div>
+              <div class="action-text">New Quotation</div>
+            </button>
+            
+            <button class="quick-action-btn">
+              <div class="action-icon">📊</div>
+              <div class="action-text">View Reports</div>
+            </button>
+            
+            <button class="quick-action-btn">
+              <div class="action-icon">👤</div>
+              <div class="action-text">Update Profile</div>
+            </button>
+            
+            <button class="quick-action-btn">
+              <div class="action-icon">📞</div>
+              <div class="action-text">Contact Support</div>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="loading-content">
+    <div class="loading-spinner spin"></div>
+    <div class="loading-text">Loading your dashboard...</div>
+    <div class="loading-subtitle">Fetching data from SAP system</div>
+  </div>
+</div>
