@@ -1,0 +1,337 @@
+/* Enhanced Dashboard Styling */
+
+/* Page Layout */
+.dashboardPage {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.dashboardContent {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styling */
+.dashboardHeader {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid #007acc;
+    box-shadow: 0 2px 10px rgba(0, 122, 204, 0.2);
+}
+
+.dashboardMainTitle {
+    color: #007acc !important;
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+}
+
+.dashboardSubTitle {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    margin-top: -0.25rem;
+}
+
+.welcomeText {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+}
+
+.userNameText {
+    color: #007acc !important;
+    font-weight: 600 !important;
+}
+
+.logoutButton {
+    color: #dc3545 !important;
+}
+
+.logoutButton:hover {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Welcome Card */
+.welcomeCard {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    box-shadow: 0 8px 32px rgba(0, 122, 204, 0.15) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.statsOverview {
+    padding: 1rem 0;
+}
+
+.statItem {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    margin: 0 0.5rem;
+}
+
+.statLabel {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.5rem;
+}
+
+.statValue {
+    color: #007acc !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    margin-top: 0.25rem;
+}
+
+.refreshButton {
+    background: linear-gradient(135deg, #007acc 0%, #0056b3 100%) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 0.75rem 2rem !important;
+    box-shadow: 0 4px 15px rgba(0, 122, 204, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.refreshButton:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(0, 122, 204, 0.4) !important;
+}
+
+/* Management Cards */
+.managementCards {
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.managementCard {
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-height: 300px;
+}
+
+.managementCard:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15) !important;
+}
+
+.riskCard {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%) !important;
+    border-left: 4px solid #dc3545 !important;
+}
+
+.incidentCard {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffffff 100%) !important;
+    border-left: 4px solid #ffc107 !important;
+}
+
+.cardContent {
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.cardMetrics {
+    margin-bottom: 1.5rem;
+}
+
+.metricLabel {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+}
+
+.metricNumber {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    margin-top: 0.5rem;
+}
+
+.trendIcon {
+    opacity: 0.7;
+}
+
+.progressBar {
+    margin: 1rem 0;
+    height: 8px !important;
+    border-radius: 4px !important;
+}
+
+.cardFooterText {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    text-align: center;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+/* Analytics Card */
+.analyticsCard {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.analyticsContent {
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.analyticsItem {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.analyticsItem:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.riskAnalytics {
+    border-top: 3px solid #dc3545;
+}
+
+.incidentAnalytics {
+    border-top: 3px solid #ffc107;
+}
+
+.complianceAnalytics {
+    border-top: 3px solid #28a745;
+}
+
+.performanceAnalytics {
+    border-top: 3px solid #007acc;
+}
+
+.analyticsLabel {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    margin-top: 0.75rem;
+}
+
+.analyticsNumber {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin: 0.5rem 0;
+}
+
+.analyticsStatus {
+    color: #495057 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    margin-top: 0.5rem;
+}
+
+.riskRating .sapMRI,
+.incidentRating .sapMRI,
+.complianceRating .sapMRI,
+.performanceRating .sapMRI {
+    margin: 0.5rem 0;
+}
+
+/* Footer */
+.dashboardFooter {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0, 122, 204, 0.2);
+}
+
+.footerText {
+    color: #6c757d !important;
+    font-size: 0.875rem !important;
+}
+
+.systemStatus {
+    color: #28a745 !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .managementCards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .managementCard {
+        width: 100% !important;
+        max-width: 400px;
+        margin-bottom: 1rem;
+    }
+    
+    .analyticsContent {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .analyticsItem {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 1rem;
+    }
+    
+    .statsOverview {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .statItem {
+        margin: 0.5rem 0;
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.managementCard,
+.welcomeCard,
+.analyticsCard {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.managementCard:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.analyticsCard {
+    animation-delay: 0.2s;
+}
+
+/* Custom Scrollbar */
+.sapMScrollCont::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sapMScrollCont::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.sapMScrollCont::-webkit-scrollbar-thumb {
+    background: rgba(0, 122, 204, 0.3);
+    border-radius: 4px;
+}
+
+.sapMScrollCont::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 122, 204, 0.5);
+}
