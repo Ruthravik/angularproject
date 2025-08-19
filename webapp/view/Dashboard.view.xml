@@ -1,0 +1,255 @@
+<mvc:View
+    controllerName="com.ehsm.portal.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    displayBlock="true">
+    
+    <Page id="_IDGenPage" title="EHSM Portal Dashboard" 
+          class="sapUiMediumMargin dashboardPage">
+        
+        <!-- Enhanced Page Header Bar -->
+        <customHeader>
+            <Bar id="_IDGenBar" class="sapContrast sapContrastPlus dashboardHeader">
+                <contentLeft>
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://shield" color="#00b4d8" size="2rem" class="sapUiTinyMarginEnd"/>
+                        <VBox>
+                            <Title id="_IDGenTitle" text="EHSM Portal" 
+                                   level="H1" class="dashboardMainTitle"/>
+                            <Text text="Safety Management Dashboard" class="dashboardSubTitle"/>
+                        </VBox>
+                    </HBox>
+                </contentLeft>
+                <contentRight>
+                    <HBox id="_IDGenHBox2" alignItems="Center">
+                        <VBox alignItems="End" class="sapUiMediumMarginEnd">
+                            <Text id="_IDGenUserText" text="Welcome back," 
+                                  class="welcomeText"/>
+                            <Text text="{userModel>/UserId}" 
+                                  class="userNameText"/>
+                        </VBox>
+                        <Avatar id="userAvatar" 
+                               displaySize="S" 
+                               backgroundColor="Accent6"
+                               press="onUserMenuPress"
+                               class="sapUiTinyMarginEnd">
+                            <core:Icon src="sap-icon://person-placeholder" color="white"/>
+                        </Avatar>
+                        <Button id="_IDGenButton2" icon="sap-icon://log" 
+                                press="onLogout"
+                                tooltip="Logout"
+                                type="Transparent"
+                                class="logoutButton"/>
+                    </HBox>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        
+        <content>
+            <ScrollContainer height="100%" vertical="true" horizontal="false">
+                <VBox id="_IDGenVBox" class="dashboardContent">
+                    
+                    <!-- Enhanced Welcome Section with Cards -->
+                    <f:Card class="welcomeCard sapUiLargeMarginBottom" width="100%">
+                        <f:header>
+                            <card:Header title="Environment, Health &amp; Safety Management" 
+                                       subtitle="Real-time Safety Monitoring &amp; Control Center"/>
+                        </f:header>
+                        <f:content>
+                            <VBox class="sapUiMediumMargin" alignItems="Center">
+                                <HBox justifyContent="SpaceAround" width="100%" class="statsOverview">
+                                    <VBox alignItems="Center" class="statItem">
+                                        <core:Icon src="sap-icon://time" size="1.5rem" color="#007acc"/>
+                                        <Text text="Session Started" class="statLabel"/>
+                                        <Text text="{userModel>/LoginTime}" class="statValue"/>
+                                    </VBox>
+                                    <VBox alignItems="Center" class="statItem">
+                                        <core:Icon src="sap-icon://refresh" size="1.5rem" color="#28a745"/>
+                                        <Text text="Last Updated" class="statLabel"/>
+                                        <Text text="{path: 'dashboardModel>/lastUpdated', 
+                                                   type: 'sap.ui.model.odata.type.DateTime', 
+                                                   formatOptions: { 
+                                                       pattern: 'HH:mm'
+                                                   }}" class="statValue"/>
+                                    </VBox>
+                                    <VBox alignItems="Center" class="statItem">
+                                        <core:Icon src="sap-icon://shield" size="1.5rem" color="#ffc107"/>
+                                        <Text text="Safety Status" class="statLabel"/>
+                                        <Text text="Active Monitoring" class="statValue"/>
+                                    </VBox>
+                                </HBox>
+                                <Button text="Refresh Dashboard" 
+                                       icon="sap-icon://refresh"
+                                       type="Emphasized"
+                                       press="onRefreshData"
+                                       class="refreshButton sapUiMediumMarginTop"/>
+                            </VBox>
+                        </f:content>
+                    </f:Card>
+                    
+                    <!-- Enhanced Main Management Cards -->
+                    <HBox justifyContent="SpaceAround" wrap="Wrap" class="managementCards">
+                        
+                        <!-- Enhanced Risk Management Card -->
+                        <f:Card class="managementCard riskCard" width="45%" press="onRiskTilePress">
+                            <f:header>
+                                <card:Header title="Risk Management" 
+                                           subtitle="Identify, Assess &amp; Mitigate Risks"
+                                           iconSrc="sap-icon://warning2"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="cardContent" alignItems="Center">
+                                    <HBox justifyContent="SpaceBetween" width="100%" alignItems="Center" class="cardMetrics">
+                                        <VBox alignItems="Center">
+                                            <Text text="Total Risks" class="metricLabel"/>
+                                            <ObjectNumber number="{dashboardModel>/riskCount}" 
+                                                        state="Error"
+                                                        emphasized="true"
+                                                        class="metricNumber"/>
+                                        </VBox>
+                                        <VBox alignItems="Center">
+                                            <core:Icon src="sap-icon://trend-up" 
+                                                     size="3rem" 
+                                                     color="#dc3545"
+                                                     class="trendIcon"/>
+                                        </VBox>
+                                    </HBox>
+                                    <ProgressIndicator percentValue="75" 
+                                                     displayValue="Risk Assessment Progress"
+                                                     state="Error"
+                                                     width="100%"
+                                                     class="progressBar"/>
+                                    <Text text="Click to view detailed risk analysis" 
+                                          class="cardFooterText"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                        
+                        <!-- Enhanced Incident Management Card -->
+                        <f:Card class="managementCard incidentCard" width="45%" press="onIncidentTilePress">
+                            <f:header>
+                                <card:Header title="Incident Management" 
+                                           subtitle="Track, Investigate &amp; Resolve Incidents"
+                                           iconSrc="sap-icon://alert"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="cardContent" alignItems="Center">
+                                    <HBox justifyContent="SpaceBetween" width="100%" alignItems="Center" class="cardMetrics">
+                                        <VBox alignItems="Center">
+                                            <Text text="Active Incidents" class="metricLabel"/>
+                                            <ObjectNumber number="{dashboardModel>/incidentCount}" 
+                                                        state="Critical"
+                                                        emphasized="true"
+                                                        class="metricNumber"/>
+                                        </VBox>
+                                        <VBox alignItems="Center">
+                                            <core:Icon src="sap-icon://trend-down" 
+                                                     size="3rem" 
+                                                     color="#28a745"
+                                                     class="trendIcon"/>
+                                        </VBox>
+                                    </HBox>
+                                    <ProgressIndicator percentValue="60" 
+                                                     displayValue="Incident Resolution Progress"
+                                                     state="Warning"
+                                                     width="100%"
+                                                     class="progressBar"/>
+                                    <Text text="Click to view incident reports and status" 
+                                          class="cardFooterText"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </HBox>
+                    
+                    <!-- Enhanced Analytics Dashboard -->
+                    <f:Card class="analyticsCard sapUiLargeMarginTop" width="100%">
+                        <f:header>
+                            <card:Header title="Safety Analytics Overview" 
+                                       subtitle="Key Performance Indicators &amp; Trends"/>
+                        </f:header>
+                        <f:content>
+                            <HBox class="analyticsContent" justifyContent="SpaceAround" wrap="Wrap">
+                                
+                                <!-- Risk Analytics -->
+                                <VBox alignItems="Center" class="analyticsItem riskAnalytics">
+                                    <core:Icon src="sap-icon://warning2" size="2.5rem" color="#dc3545"/>
+                                    <Text text="Risk Level" class="analyticsLabel"/>
+                                    <ObjectNumber number="{dashboardModel>/riskCount}" 
+                                                state="Error"
+                                                emphasized="true"
+                                                class="analyticsNumber"/>
+                                    <RatingIndicator value="3" maxValue="5" class="riskRating"/>
+                                    <Text text="High Priority" class="analyticsStatus"/>
+                                </VBox>
+                                
+                                <!-- Incident Analytics -->
+                                <VBox alignItems="Center" class="analyticsItem incidentAnalytics">
+                                    <core:Icon src="sap-icon://alert" size="2.5rem" color="#ffc107"/>
+                                    <Text text="Incident Rate" class="analyticsLabel"/>
+                                    <ObjectNumber number="{dashboardModel>/incidentCount}" 
+                                                state="Critical"
+                                                emphasized="true"
+                                                class="analyticsNumber"/>
+                                    <RatingIndicator value="2" maxValue="5" class="incidentRating"/>
+                                    <Text text="Moderate" class="analyticsStatus"/>
+                                </VBox>
+                                
+                                <!-- Compliance Analytics -->
+                                <VBox alignItems="Center" class="analyticsItem complianceAnalytics">
+                                    <core:Icon src="sap-icon://shield" size="2.5rem" color="#28a745"/>
+                                    <Text text="Compliance Score" class="analyticsLabel"/>
+                                    <ObjectNumber number="87" 
+                                                unit="%"
+                                                state="Success"
+                                                emphasized="true"
+                                                class="analyticsNumber"/>
+                                    <RatingIndicator value="4" maxValue="5" class="complianceRating"/>
+                                    <Text text="Good Standing" class="analyticsStatus"/>
+                                </VBox>
+                                
+                                <!-- Safety Performance -->
+                                <VBox alignItems="Center" class="analyticsItem performanceAnalytics">
+                                    <core:Icon src="sap-icon://measurement-document" size="2.5rem" color="#007acc"/>
+                                    <Text text="Safety Performance" class="analyticsLabel"/>
+                                    <ObjectNumber number="92" 
+                                                unit="%"
+                                                state="Success"
+                                                emphasized="true"
+                                                class="analyticsNumber"/>
+                                    <RatingIndicator value="5" maxValue="5" class="performanceRating"/>
+                                    <Text text="Excellent" class="analyticsStatus"/>
+                                </VBox>
+                            </HBox>
+                        </f:content>
+                    </f:Card>
+                </VBox>
+            </ScrollContainer>
+        </content>
+        
+        <!-- Enhanced Footer -->
+        <footer>
+            <Bar id="_IDGenBar1" class="sapContrast dashboardFooter">
+                <contentLeft>
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://sap-logo-shape" size="1rem" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                        <Text id="_IDGenText9" text="SAP S/4HANA Integration" 
+                              class="footerText"/>
+                    </HBox>
+                </contentLeft>
+                <contentMiddle>
+                    <Text text="🟢 System Status: Online" class="systemStatus"/>
+                </contentMiddle>
+                <contentRight>
+                    <HBox alignItems="Center">
+                        <Text id="_IDGenText10" text="EHSM Portal v1.1" 
+                              class="footerText sapUiTinyMarginEnd"/>
+                        <core:Icon src="sap-icon://information" size="1rem" color="#6c757d"/>
+                    </HBox>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
